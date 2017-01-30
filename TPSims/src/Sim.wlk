@@ -1,5 +1,6 @@
-import Personalidades.*
 import Abrazos.*
+import Celos.*
+import Personalidades.*
 import EstadosDeAnimo.*
 
 class Sim{
@@ -62,17 +63,7 @@ class Sim{
 	method estadoDeAnimo(estado){
 		estadoDeAnimo = estado
 		estadoDeAnimo.sim(self)
-		estadoDeAnimo.modificarEstadoDeAnimo()
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		estadoDeAnimo.modificarEstadoDeAnimo()	
 	}
 	
 	//metodos
@@ -129,7 +120,7 @@ class Sim{
 	}
 		
 	method leAtrae(unSim){
-		return preferenciaSexual == unSim.sexo() && personalidad.leAtrae(unSim)		
+		return preferenciaSexual == unSim.sexo() && personalidad.leAtrae(self,unSim)		
 	}
 	
 	method duplicaFortunaDe(otroSim){

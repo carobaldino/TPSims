@@ -1,9 +1,52 @@
-
-import Sim.*
+import Abrazos.*
+import Celos.*
+import EstadosDeAnimo.*
 import Personalidades.*
+import Sim.*
+
+
  
 
+test "1.0 - Hacer que un Sim abrace a otro con abrazo comun: Si Maria tiene felicidad=20 y abraza a Federico de felicidad=30, entonces Maria nivelFelicidad=22 y Federico nivelFelicidad=34 "{
+	var maria = new Sim() maria.nivelFelicidad(20)
+	var federico = new Sim() federico.nivelFelicidad(30)
+	
+	maria.abrazarA(federico, abrazoComun)
+	
+	assert.equals(22,maria.nivelFelicidad())
+	assert.equals(34,federico.nivelFelicidad())
+	
+}
 
+test "1.1 Hacer que un Sim abrace a otro con abrazo prolongado: Maria abraza a Federico y este se siente atraido, entonces Federico se pone soniador"{
+	
+	var maria = new Sim() 
+	var federico = new Sim() 
+	
+	//para que a federico le atraiga Maria:
+	federico.preferenciaSexual("Mujer")
+	maria.sexo("Mujer")
+	
+	federico.personalidad(buenazo)
+	
+	
+	maria.abrazarA(federico, abrazoProlongado)
+	
+	assert.equals(soniador, federico.estadoDeAnimo())
+	
+	
+}
+
+test "1.2 Hacer que un Sim abrace a otro con abrazo prolongado: Martin abraza a Federico y pero este no se siente atraido, entonces Federico se pone incomodo"{
+	var martin = new Sim() martin.sexo("Hombre")
+	var federico = new Sim() federico.personalidad(buenazo)
+	
+	
+	
+	martin.abrazarA(federico, abrazoProlongado)
+	
+	assert.equals(incomodo, federico.estadoDeAnimo())
+}
 
 test "2.0 - Si Juan es interesado y valora a Felipe, asigna valor a Felipe como el 10% del dinero de los amigos de Felipe"{
 	var felipe=new Sim()

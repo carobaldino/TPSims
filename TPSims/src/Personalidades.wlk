@@ -1,3 +1,4 @@
+import Celos.*
 import Sim.*
 import Abrazos.*
 import EstadosDeAnimo.*

@@ -1,9 +1,9 @@
-import Abrazo.*
-import EstadoDeAnimo.*
-import Personalidad.*
+import Abrazos.*
+import EstadosDeAnimo.*
+import Personalidades.*
 import Sim.*
-import SituacionesSentimentales.*
-import TiposDeTrabajos.*
+//import SituacionesSentimentales.*
+//import TiposDeTrabajos.*
 
 class Celos {
 	var simCeloso

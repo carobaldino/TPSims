@@ -1,6 +1,8 @@
+import Celos.*
+import EstadosDeAnimo.*
 import Sim.*
 import Personalidades.*
-import EstadosDeAnimo.*
+
 
 object abrazoComun {
 	method abrazar(simAbrazador,simAbrazado){

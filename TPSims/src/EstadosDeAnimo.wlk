@@ -1,3 +1,4 @@
+import Celos.*
 import Sim.*
 import Personalidades.*
 import Abrazos.*
