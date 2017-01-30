@@ -1,0 +1,212 @@
+
+import Sim.*
+import Personalidades.*
+ 
+
+
+
+test "2.0 - Si Juan es interesado y valora a Felipe, asigna valor a Felipe como el 10% del dinero de los amigos de Felipe"{
+	var felipe=new Sim()
+	var juan=new Sim()
+	var erwin= new Sim()
+	var rodrigo = new Sim()
+	erwin.dinero(500)
+	rodrigo.dinero(100)
+	
+	juan.personalidad(interesado)
+	felipe.amigos([erwin,rodrigo])
+
+	
+	assert.equals(60,juan.valorarA(felipe))		
+}
+
+test "2.1 - Si Lucas es superficial y valora a Felipe, devuelve el 20*nivelPopularidad de Felipe"{
+	var lucas = new Sim()
+	var felipe = new Sim()
+  	var mariano=new Sim()
+  	var carolina=new Sim()
+  	
+  	//se agregan amigos y nivel de felicidad de cada uno para poder calcular nivelPopularidad de Felipe
+  	felipe.agregarAmigo(mariano)
+  	felipe.agregarAmigo(carolina)
+  	
+  	mariano.nivelFelicidad(50)
+  	carolina.nivelFelicidad(20)
+    //nivelPopularidad de Felipe = 70; la valoracion debe dar 1400 (20*70)
+    
+	lucas.personalidad(superficial)
+	
+	assert.equals(1400,lucas.valorarA(felipe))
+}
+
+test "2.2 - Si Ernesto tiene nivelFelicidad de 1000, asigna una valoración de 500 tanto a María como a Héctor "{
+	var ernesto = new Sim()
+	var maria = new Sim()
+	var hector = new Sim()
+	
+	ernesto.personalidad(buenazo)
+	ernesto.nivelFelicidad(1000)
+	
+	assert.equals(500,ernesto.valorarA(maria))
+	assert.equals(500,ernesto.valorarA(hector))
+	
+}
+
+test "2.3 - Si Matías es peleadoConLaVida, valoran a cualquiera con 0"{
+	var matias = new Sim()
+	var ernesto = new Sim()
+	var lucas = new Sim()
+	
+	matias.personalidad(peleadoConLaVida)
+	ernesto.personalidad(buenazo)
+	lucas.personalidad(superficial)
+	
+	assert.equals(0,matias.valorarA(ernesto))
+	assert.equals(0,matias.valorarA(superficial))
+}
+
+test "3.0 - Saber quién es el amigo a quién más valora un Sim: El amigo más valorado de Felipe (interesado) es "{
+	var felipe = new Sim()
+  	var mariano=new Sim()
+  	var carolina=new Sim()
+	
+	felipe.personalidad(interesado)
+  	
+  	var amigoMariano1 = new Sim() amigoMariano1.dinero(200)
+  	var amigoMariano2 = new Sim() amigoMariano2.dinero(400)
+    mariano.amigos([amigoMariano1,amigoMariano2])
+    
+  	var amigoCarolina1 = new Sim() amigoCarolina1.dinero(150)
+  	var amigoCarolina2 = new Sim() amigoCarolina2.dinero(500)
+  	carolina.amigos([amigoCarolina1,amigoCarolina2])
+  	
+  	felipe.amigos([mariano,carolina])
+  	
+  	assert.equals(carolina,felipe.simMasValorado())
+}
+
+test "3.1 - Felipe (superficial) tiene como amigo más valorado a Mariano"{
+	var felipe = new Sim() felipe.personalidad(superficial)
+	var mariano= new Sim() 
+	var carolina = new Sim()
+	
+	var amigoMariano1 = new Sim() amigoMariano1.nivelFelicidad(80)
+	var amigoMariano2 = new Sim() amigoMariano2.nivelFelicidad(70)
+	mariano.amigos([amigoMariano1,amigoMariano2])
+	
+	var amigoCarolina1 = new Sim() amigoCarolina1.nivelFelicidad(50)
+	var amigoCarolina2 = new Sim() amigoCarolina2.nivelFelicidad(35)
+	carolina.amigos([amigoCarolina1,amigoCarolina2])
+	
+	//por ende mariano va a tener mayor nivel de popularidad porque sus amigos son más felices
+	
+	felipe.amigos([mariano,carolina])
+	
+	assert.equals(mariano,felipe.simMasValorado())
+	
+}
+
+test "4 - Hacer que un Sim se haga amigo de otro: Se modifica el nivelDeFelicidad al hacerse amigo"{
+	
+	
+	var matias = new Sim() matias.personalidad(buenazo) matias.nivelFelicidad(1000)
+    var ariel = new Sim() 
+    
+    matias.hacerseAmigoDe(ariel)
+    
+    assert.that(matias.esAmigoDe(ariel))
+    assert.equals(1500,matias.nivelFelicidad())
+	
+}
+
+test "5 - Hacer que dos amigos se hagan entre sí"{
+	var matias = new Sim() matias.personalidad(buenazo) matias.nivelFelicidad(1000)
+    var ariel = new Sim() ariel.personalidad(buenazo) ariel.nivelFelicidad(500)  
+    
+    matias.hacerAmistadMutua(ariel)
+    
+    assert.that(matias.esAmigoDe(ariel) and ariel.esAmigoDe(matias)) 
+}
+
+test "6 - Saber si un Sim es Amigo de otro"{
+	var matias = new Sim() matias.personalidad(buenazo) matias.nivelFelicidad(1000)
+    var ariel = new Sim() ariel.personalidad(buenazo) ariel.nivelFelicidad(500)  
+   
+    matias.hacerseAmigoDe(ariel)
+    
+    matias.esAmigoDe(ariel)
+    
+    assert.that(matias.amigos().any({unAmigo => unAmigo === ariel}))    
+}
+
+test "7 - Preguntarle a un Sim cuales son sus 4 amigos más nuevos" {
+	var matias = new Sim() matias.personalidad(buenazo) matias.nivelFelicidad(200)
+	var amigo1 = new Sim()
+	var amigo2 = new Sim()
+	var amigo3 = new Sim()
+	var amigo4 = new Sim()
+	var amigo5 = new Sim()
+	var amigo6 = new Sim()
+	
+	matias.agregarAmigo(amigo1)
+	matias.agregarAmigo(amigo2)
+	matias.agregarAmigo(amigo3)
+	matias.agregarAmigo(amigo4)
+	matias.agregarAmigo(amigo5)
+	matias.agregarAmigo(amigo6)
+	
+	assert.equals([amigo1,amigo2,amigo3,amigo4],matias.cantAmigosMasNuevos(4))
+		
+}	
+
+
+test "8 - Preguntarle a un Sim cuales son sus 4 amigos más antiguos"{
+	var matias = new Sim() matias.personalidad(buenazo) matias.nivelFelicidad(200)
+	var amigo1 = new Sim()
+	var amigo2 = new Sim()
+	var amigo3 = new Sim()
+	var amigo4 = new Sim()
+	var amigo5 = new Sim()
+	var amigo6 = new Sim()
+	
+	matias.agregarAmigo(amigo1)
+	matias.agregarAmigo(amigo2)
+	matias.agregarAmigo(amigo3)
+	matias.agregarAmigo(amigo4)
+	matias.agregarAmigo(amigo5)
+	matias.agregarAmigo(amigo6)
+	
+	assert.equals([amigo3,amigo4,amigo5,amigo6],matias.cantAmigosMasViejos(4))
+}
+
+
+test "9 - Preguntarse a unSim cual es su nivel de popularidad: Si Felipe tiene amigos, quienes tienen 50 y 20 de nivelFelicidad respectivamente, su nivelPopularidad es 70" {
+  	var felipe=new Sim()
+  	var mariano=new Sim()
+  	var carolina=new Sim()
+  	
+  	felipe.agregarAmigo(mariano)
+  	felipe.agregarAmigo(carolina)
+  	
+  	mariano.nivelFelicidad(50)
+  	carolina.nivelFelicidad(20)
+  	
+  	assert.equals(70,felipe.nivelPopularidad())	
+}
+
+test "10 - Preguntarle a un Sim si es el mas popular de su circulo de amigos"{
+	var matias = new Sim() matias.nivelFelicidad(50)
+	var amigo1 = new Sim() amigo1.nivelFelicidad(40)
+	var amigo2 = new Sim() amigo2.nivelFelicidad(20)
+	var amigo3 = new Sim() amigo3.nivelFelicidad(15)
+	
+	matias.amigos([amigo1,amigo2,amigo3]) //nivelPopularidad: 75 (40+20+15)
+	amigo1.amigos([amigo2,amigo3]) //nivelPopularidad: 35 (20+15)
+	amigo2.amigos([amigo1])//nivelPopularidad: 40 (40)
+	amigo3.amigos([matias])//nivelPopularidad: 50 (50)
+	
+	
+	
+	assert.that(matias.esElMasPopularDeSuCirculo())
+	
+}
