@@ -450,3 +450,12 @@ test "25 - Hacer que un Sim tenga amnesia y se olvide (irreversiblemente) todos 
 	
 	assert.equals([],pedro.informacion())
 }
+
+test "26 - Hacer que un Sim tenga un estado de ánimo particular:
+Si el Sim es soniador y se vuelve incómodo, vuelve a la normalidad y es reemplazado por este"{
+	
+}
+
+test "27 - Hacer que a un Sim se le vaya su estado de ánimo actual (soniador) y vuelva a la normalidad"{
+	
+}

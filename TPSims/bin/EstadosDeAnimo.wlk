@@ -3,11 +3,12 @@ import Sim.*
 import Personalidades.*
 import Abrazos.*
 
+/*
 class EstadoDeAnimo{
-	var sim
-	var felicidadOriginal
-	var conocimientosOriginales
-	
+	//var sim
+	//var felicidadOriginal
+	//var conocimientosOriginales
+ 	
 	method sim(unSim){
 		sim = unSim
 	}
@@ -19,7 +20,7 @@ class EstadoDeAnimo{
 	method conocimientosOriginales(){
 		conocimientosOriginales=sim.informacion()
 	}
-	
+
 	method volverALaNormalidad(){
 		sim.nivelFelicidad(felicidadOriginal)
 		sim.informacion(conocimientosOriginales)
@@ -28,21 +29,65 @@ class EstadoDeAnimo{
 	
 }
 
+	method nivelFelicidad()
+	
+	method modificarConocimiento(info)
+}
+*/
 
-
-
+class EstadoDeAnimo {
+	var info
+	
+	method setInfo(informacion){
+		info = informacion
+	}
+	
+	method getInfo(){
+		return info
+	}
+}
 
 object soniador inherits EstadoDeAnimo{
-	method modificarEstadoDeAnimo(){
-		
+	
+	method nivelFelicidad(){
+		return 1000
+	}
+	
+	method modificarConocimiento(informacion){
+		self.setInfo(informacion)
+		return []
 	}
 
 }
 
 object incomodo inherits EstadoDeAnimo{
-	method modificarEstadoDeAnimo(){
-		
+	
+	method nivelFelicidad(){
+		return -200
+	}
+	
+	method modificarConocimiento(informacion){
+		return info
+	}
+	
+}
+
+object normal inherits EstadoDeAnimo{
+	
+	method nivelFelicidad(){
+		return -1000
+	}
+	
+	method modificarConocimiento(informacion){
+		return info
 	}
 }
 
-object normal inherits EstadoDeAnimo{}
+
+
+
+
+
+
+
+

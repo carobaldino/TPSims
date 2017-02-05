@@ -13,6 +13,7 @@ class Sim{
 	var preferenciaSexual
 	var estadoDeAnimo = normal
 	var informacion = []
+	var situacionSentimental
 	
 	method sexo(){
 		return sexo
@@ -37,6 +38,10 @@ class Sim{
 	}
 	method estadoDeAnimo(){
 		return estadoDeAnimo
+	}
+	
+	method situacionSentimental(){
+		return situacionSentimental	
 	}
 	
 	method informacion(){
@@ -64,13 +69,13 @@ class Sim{
 	method preferenciaSexual(sexoPreferido){
 		preferenciaSexual = sexoPreferido
 	}
-	method estadoDeAnimo(estado){
-		estadoDeAnimo = estado
-		estadoDeAnimo.sim(self)
-		estadoDeAnimo.modificarEstadoDeAnimo()	
+	
+	method situacionSentimental(situacion){
+		situacionSentimental = situacion
 	}
+	
 
-	//metodos
+	//otrosMetodos
 
 	method nivelPopularidad(){
 		return amigos.sum({unAmigo => unAmigo.nivelFelicidad()})
@@ -146,6 +151,17 @@ class Sim{
 	method simsQueLeAtraen(coleccionDeSims){
 		return coleccionDeSims.filter({sim => self.leAtrae(sim)})
 		
+	}
+	
+	method estadoDeAnimo(estado){
+		estadoDeAnimo = estado
+		//estadoDeAnimo.sim(self)
+		nivelFelicidad += estadoDeAnimo.nivelFelicidad()
+		informacion = estadoDeAnimo.modificarConocimiento(informacion)	
+	}
+	
+	method volverALaNormalidad(){
+		self.estadoDeAnimo(normal)
 	}
 	
 	
