@@ -35,52 +35,31 @@ class EstadoDeAnimo{
 }
 */
 
-class EstadoDeAnimo {
-	var info
-	
-	method setInfo(informacion){
-		info = informacion
-	}
-	
-	method getInfo(){
-		return info
-	}
-}
 
-object soniador inherits EstadoDeAnimo{
+
+object soniador{
 	
-	method nivelFelicidad(){
+	method variacionFelicidad(){
 		return 1000
 	}
-	
-	method modificarConocimiento(informacion){
-		self.setInfo(informacion)
-		return []
-	}
 
 }
 
-object incomodo inherits EstadoDeAnimo{
+object incomodo {
 	
-	method nivelFelicidad(){
+	method variacionFelicidad(){
 		return -200
 	}
 	
-	method modificarConocimiento(informacion){
-		return info
-	}
-	
 }
 
-object normal inherits EstadoDeAnimo{
+object normal {
 	
-	method nivelFelicidad(){
-		return -1000
+	method variacionFelicidad(){
+		return 0
 	}
 	
-	method modificarConocimiento(informacion){
-		return info
-	}
+
 }
 
 

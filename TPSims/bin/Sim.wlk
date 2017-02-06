@@ -14,6 +14,7 @@ class Sim{
 	var estadoDeAnimo = normal
 	var informacion = []
 	var situacionSentimental
+
 	
 	method sexo(){
 		return sexo
@@ -22,7 +23,7 @@ class Sim{
 		return edad
 	}
 	method nivelFelicidad(){
-		return nivelFelicidad
+		return nivelFelicidad + estadoDeAnimo.variacionFelicidad()
 	}
 	method amigos(){
 		return amigos
@@ -45,7 +46,10 @@ class Sim{
 	}
 	
 	method informacion(){
-		return informacion
+		if (estadoDeAnimo == soniador)
+			return []
+		else
+			return informacion
 	}
 	
 	method sexo(_sexo){
@@ -155,9 +159,7 @@ class Sim{
 	
 	method estadoDeAnimo(estado){
 		estadoDeAnimo = estado
-		//estadoDeAnimo.sim(self)
-		nivelFelicidad += estadoDeAnimo.nivelFelicidad()
-		informacion = estadoDeAnimo.modificarConocimiento(informacion)	
+		//estadoDeAnimo.sim(self)	
 	}
 	
 	method volverALaNormalidad(){
