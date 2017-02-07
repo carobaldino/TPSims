@@ -452,10 +452,40 @@ test "25 - Hacer que un Sim tenga amnesia y se olvide (irreversiblemente) todos 
 }
 
 test "26 - Hacer que un Sim tenga un estado de ánimo particular:
-Si el Sim es soniador y se vuelve incómodo, vuelve a la normalidad y es reemplazado por este"{
+Si el Sim es soniador , vuelve a la normalidad y se vuelve incómodo"{
+	var juan = new Sim()
+	
+	juan.nivelFelicidad(500)
+	juan.recibirInformacion("A la grande le puse cuca")
+	
+	juan.estadoDeAnimo(soniador)
+	
+	assert.equals([],juan.informacion())
+	assert.equals(1500, juan.nivelFelicidad())
+	
+	juan.estadoDeAnimo(normal)
+	
+	assert.equals(["A la grande le puse cuca"],juan.informacion())
+	assert.equals(500, juan.nivelFelicidad())
+	
+	juan.estadoDeAnimo(incomodo)
+	
+	assert.equals(["A la grande le puse cuca"],juan.informacion())
+	assert.equals(300, juan.nivelFelicidad())	
+	
 	
 }
 
-test "27 - Hacer que a un Sim se le vaya su estado de ánimo actual (soniador) y vuelva a la normalidad"{
+test "27 - Hacer que a un Sim se le vaya su estado de ánimo actual (incomodo) y vuelva a la normalidad"{
+	var jose = new Sim()
 	
+	jose.estadoDeAnimo(incomodo)
+	
+	assert.equals(-200,jose.nivelFelicidad())
+	assert.equals(incomodo,jose.estadoDeAnimo())
+	
+	jose.estadoDeAnimo(normal)
+	
+	assert.equals(0,jose.nivelFelicidad())
+	assert.equals(normal,jose.estadoDeAnimo())
 }
