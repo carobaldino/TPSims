@@ -3,7 +3,7 @@ import Celos.*
 import EstadosDeAnimo.*
 import Personalidades.*
 import Sim.*
-
+import SituacionesSentimentales.*
 
  
 
@@ -254,7 +254,125 @@ test "10 - Preguntarle a un Sim si es el mas popular de su circulo de amigos"{
 	
 }
 
+test "11 - Hacer que dos Sims inicien una relacion: Carlitos y Carla inician una relación y cambian su estado"{
+	var carlitos = new Sim()
+	var carlita = new Sim()
+	
+	carlitos.iniciarRelacionCon(carlita)
+	
+	assert.equals("Relacion",carlitos.situacionSentimental())
+	assert.equals("Relacion",carlita.situacionSentimental())
+}
 
+test "12.0 - Saber si un Sim forma parte de una relacion: Carlitos y Carla forman parte de una relacion"{
+	var carlitos = new Sim()
+	var carlita = new Sim()
+	
+	carlitos.iniciarRelacionCon(carlita)
+	
+	assert.that(carlitos.formaParteDeUnaRelacion())
+	assert.that(carlitos.formaParteDeUnaRelacion())
+}
+
+test "12.1 - Saber si un sim forma parte de una relacion: Roberto esta soltero"{
+	var roberto = new Sim()
+		
+	assert.that(not(roberto.formaParteDeUnaRelacion()))
+}
+
+test "13 - Hacer que una relacion termine haciendo que sus miembros dejen de formar parte de ella" {
+	var carlo = new Sim()
+	var carla = new Sim()
+	
+	carlo.iniciarRelacionCon(carla)
+	
+	carlo.terminarRelacionCon(carla)
+
+	assert.equals("Soltero",carlo.situacionSentimental())
+	assert.equals("Soltero",carla.situacionSentimental())	
+}
+
+test "14.0 - Saber si una relación terminó" {
+	var carlo = new Sim()
+	var carla = new Sim()
+	
+	carlo.iniciarRelacionCon(carla)
+	
+	carlo.terminarRelacionCon(carla)
+	
+	assert.that(carlo.terminoCon(carla))
+}
+
+test "14.1 - Saber si una relación terminó" {
+	var carlo = new Sim()
+	var carla = new Sim()
+	
+	carlo.iniciarRelacionCon(carla)
+	
+	carlo.terminarRelacionCon(carla)
+	
+	assert.that(carla.terminoCon(carlo))
+}
+
+
+test "15.0 - Conocer el circulo de amigos de una relacion: dos novios fusionan a sus amigos sin repetidos" {
+	var carlo = new Sim()
+	var carla = new Sim()
+	
+	var jose = new Sim()
+	var martin = new Sim()
+	carlo.amigos([jose,martin])
+	
+	var carolina = new Sim()
+	carla.amigos([carolina,jose])
+	
+	carlo.iniciarRelacionCon(carla)
+	
+	assert.equals(#{jose,martin,carolina},carlo.amigos())
+}
+
+test "15.1 - Conocer el circulo de amigos de una relacion: si termina la relacion no pierde a sus amigos"{
+	var carlo = new Sim()
+	var carla = new Sim()
+	
+	var jose = new Sim()
+	var martin = new Sim()
+	carlo.amigos([jose,martin])
+	
+	var carolina = new Sim()
+	carla.agregarAmigo(carolina)
+	
+	carlo.iniciarRelacionCon(carla)
+	
+	carlo.terminarRelacionCon(carla)
+	
+	assert.equals(#{jose,martin},carlo.amigos())
+	assert.equals(#{carolina},carla.amigos())
+}
+
+test "16 - Conocer a los miembros de una relacion (siempre son dos)" {
+	var carlo = new Sim()
+	var carla = new Sim()
+	
+	carla.iniciarRelacionCon(carlo)
+	
+	assert.equals([carla,carlo],carla.miembrosDeLaRelacion())
+}
+
+test "17.0 - Saber si una relacion funciona: carlos y juan no se atraen, entonces no funciona" {
+	var carlo = new Sim() carlo.sexo("Masculino") carlo.preferenciaSexual("Femenino")
+	var juan = new Sim() juan.sexo("Masculino") juan.preferenciaSexual("Femenino")
+	
+	assert.that(not(carlo.funcionaRelacionCon(juan)) && not(juan.funcionaRelacionCon(carlo)) )
+}
+
+test "17.1 - Saber si una relacion funcina: carlo y carla se atren, entonces funciona" {
+	var carlo = new Sim() carlo.sexo("Masculino") carlo.preferenciaSexual("Femenino") carlo.personalidad(buenazo)
+	var carla = new Sim() carla.sexo("Femenino") carla.preferenciaSexual("Masculino") carla.personalidad(buenazo)
+	
+	assert.that(carlo.funcionaRelacionCon(carla) && carla.funcionaRelacionCon(carlo))
+		
+}
 
 test "20.0 - Saber si un Sim se siente atraido por otro: 
 Si a María le gustan los Hombres, y a Juan las mujeres, no van a sentir atracción de otro Sexo"{

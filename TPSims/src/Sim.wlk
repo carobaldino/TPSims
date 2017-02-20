@@ -2,6 +2,7 @@ import Abrazos.*
 import Celos.*
 import Personalidades.*
 import EstadosDeAnimo.*
+import SituacionesSentimentales.*
 
 class Sim{
 	var sexo
@@ -13,7 +14,8 @@ class Sim{
 	var preferenciaSexual
 	var estadoDeAnimo = normal
 	var informacion = []
-	var situacionSentimental
+	var situacionSentimental = soltero
+	var historialDeRelaciones = []
 
 	
 	method sexo(){
@@ -21,12 +23,6 @@ class Sim{
 	}
 	method edad(){
 		return edad
-	}
-	method nivelFelicidad(){
-		return nivelFelicidad + estadoDeAnimo.variacionFelicidad()
-	}
-	method amigos(){
-		return amigos
 	}
 	method dinero(){
 		return dinero
@@ -40,18 +36,6 @@ class Sim{
 	method estadoDeAnimo(){
 		return estadoDeAnimo
 	}
-	
-	method situacionSentimental(){
-		return situacionSentimental	
-	}
-	
-	method informacion(){
-		if (estadoDeAnimo == soniador)
-			return []
-		else
-			return informacion
-	}
-	
 	method sexo(_sexo){
 		sexo = _sexo
 	}
@@ -73,14 +57,18 @@ class Sim{
 	method preferenciaSexual(sexoPreferido){
 		preferenciaSexual = sexoPreferido
 	}
-	
+	method estadoDeAnimo(estado){
+		estadoDeAnimo = estado	
+	}
 	method situacionSentimental(situacion){
 		situacionSentimental = situacion
 	}
 	
 
 	//otrosMetodos
-
+	method nivelFelicidad(){
+		return nivelFelicidad + estadoDeAnimo.variacionFelicidad()
+	}
 	method nivelPopularidad(){
 		return amigos.sum({unAmigo => unAmigo.nivelFelicidad()})
 	}
@@ -123,7 +111,6 @@ class Sim{
 		return amigos.all({unAmigo => self.nivelPopularidad() >= unAmigo.nivelPopularidad()})
 	}
 	
-	
 	method abrazarA(unSim,tipoDeAbrazo){
 		tipoDeAbrazo.abrazar(self,unSim)
 	}
@@ -154,20 +141,67 @@ class Sim{
 	
 	method simsQueLeAtraen(coleccionDeSims){
 		return coleccionDeSims.filter({sim => self.leAtrae(sim)})
-		
 	}
 	
-	method estadoDeAnimo(estado){
-		estadoDeAnimo = estado
-		//estadoDeAnimo.sim(self)	
+	method iniciarRelacionCon(otroSim){
+		var relacion = new Relacion(self,otroSim)
+		self.situacionSentimental(relacion)
+		otroSim.situacionSentimental(relacion)
 	}
+	
+	method amigos(){
+		return situacionSentimental.obtenerAmigos(amigos)	
+	}
+	
+	method _amigos(){
+		return amigos
+	}
+	
+	method situacionSentimental(){
+		return situacionSentimental.situacion()	
+	}
+	
+	method formaParteDeUnaRelacion(){
+		return situacionSentimental.estaEnRelacion()
+	}
+	
+	method miembrosDeLaRelacion(){
+		return situacionSentimental.miembros()
+	}
+	
+	method terminarRelacionCon(unSim){
+		self.agregarRelacionAlHistorial(unSim)
+		unSim.agregarRelacionAlHistorial(self)
+		self.situacionSentimental(soltero)
+		unSim.situacionSentimental(soltero)
+		//al cambiar la referencia de el atributo situacion sentimental, se pierde el objeto relacion, por lo que dejan de formarla
+	}
+	
+	method agregarRelacionAlHistorial(unSim){
+		historialDeRelaciones.add(unSim)
+	}
+	
+	method terminoCon(otroSim) {
+		return historialDeRelaciones.contains(otroSim)
+	}
+	
+	method funcionaRelacionCon(unSim){
+		return self.leAtrae(unSim) && unSim.leAtrae(self)
+	}
+		
+	
+
+	
+	
+	
 	
 	method volverALaNormalidad(){
 		self.estadoDeAnimo(normal)
 	}
 	
-	
-	
+	method informacion(){
+		return estadoDeAnimo.informacion(informacion)
+	}
 	method conoceInformacion(unaInformacion){
 		return informacion.contains(unaInformacion)
 	}
