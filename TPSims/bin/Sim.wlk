@@ -3,19 +3,21 @@ import Celos.*
 import Personalidades.*
 import EstadosDeAnimo.*
 import SituacionesSentimentales.*
+import Trabajos.*
 
 class Sim{
 	var sexo
 	var edad
 	var nivelFelicidad = 0
 	var amigos = []
-	var dinero
+	var dinero = 0
 	var personalidad
 	var preferenciaSexual
 	var estadoDeAnimo = normal
 	var informacion = []
 	var situacionSentimental = soltero
 	var historialDeRelaciones = []
+
 
 	
 	method sexo(){
@@ -231,4 +233,23 @@ class Sim{
 		informacion = []
 	}
 	
+	method tenerCelosPor(tipoDeCelo){
+		tipoDeCelo.ponerseCeloso(self)
+	}
+	
+	method disminuirFelicidad(cantidad){
+		nivelFelicidad -= cantidad
+	}
+	
+	method trabajarEn(tipoTrabajo,dineroACobrar,variacionFelicidad){
+		var trabajo = new Trabajo(dineroACobrar,variacionFelicidad,tipoTrabajo,self) 
+		trabajo.trabajar()
+	}
+	
+	method aumentarDinero(cantDinero){
+		dinero += cantDinero
+	}
+	
+	
+
 }

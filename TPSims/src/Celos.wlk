@@ -6,27 +6,35 @@ import SituacionesSentimentales.*
 //import TiposDeTrabajos.*
 
 
-//object celosPorPlata {
-//	method ponerseCeloso(){
-//		simCeloso.disminuirFelicidad(10)
-//		var nuevosAmigos= simCeloso.amigos().filter({unAmigo => unAmigo.dinero() < simCeloso.dinero()})
-//		simCeloso.amigos(nuevosAmigos)
-//	}
-//}
-//  
-//object celosPorPopularidad{
-//	method ponerseCeloso(){
-//		simCeloso.disminuirFelicidad(10)
-//		var nuevosAmigos= simCeloso.amigos().filter({unAmigo=> unAmigo.nivelPopularidad() < simCeloso.nivelPopularidad()})
-//		simCeloso.amigos(nuevosAmigos)
-//	}
-//}
-//
-//object celosDePareja{
-//	method ponerseCeloso(){
-//		simCeloso.disminuirFelicidad(10)
-//		var amigosDeSuPareja = simCeloso.pareja()._amigos()
-//		var nuevosAmigos= simCeloso.amigos().filter({unAmigo=> not(amigosDeSuPareja.contains(unAmigo))})
-//		simCeloso.amigos(nuevosAmigos)
-//	}
-//}
+object plata {
+	method ponerseCeloso(sim){
+		sim.disminuirFelicidad(10)
+		self.dejarAmigosQueTienenMasPlata(sim)
+	}
+		
+	method dejarAmigosQueTienenMasPlata(sim){	
+ 		sim.amigos(sim.amigos().filter({unAmigo => unAmigo.dinero() < sim.dinero()}))
+	}
+}
+ 
+object popularidad{
+	method ponerseCeloso(sim){
+		sim.disminuirFelicidad(10)
+		self.dejarAmigosMasPopulares(sim)
+	}
+	
+	method dejarAmigosMasPopulares(sim){
+		sim.amigos(sim.amigos().filter({unAmigo=> unAmigo.nivelPopularidad() < sim.nivelPopularidad()}))
+	}
+}
+
+object pareja{
+	method ponerseCeloso(sim){
+		sim.disminuirFelicidad(10)
+		self.dejarAmigosDeSuPareja(sim)
+	}
+	
+	method dejarAmigosDeSuPareja(sim){
+		sim.amigos(sim.amigos().filter({unAmigo=> not(sim.pareja()._amigos().contains(unAmigo)) }) )
+	}
+}

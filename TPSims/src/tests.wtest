@@ -4,6 +4,7 @@ import EstadosDeAnimo.*
 import Personalidades.*
 import Sim.*
 import SituacionesSentimentales.*
+import Trabajos.*
 
  
 
@@ -636,3 +637,38 @@ test "27 - Hacer que a un Sim se le vaya su estado de ánimo actual (incomodo) y 
 	assert.equals(0,jose.nivelFelicidad())
 	assert.equals(normal,jose.estadoDeAnimo())
 }
+
+test "28 - Hacer que un sim se ponga celoso por cualquiera de los motivos presentados"{
+	var jose = new Sim() jose.nivelFelicidad(200) jose.dinero(5000)
+	
+	var pedro = new Sim() pedro.dinero(7000)
+	var rodrigo = new Sim() rodrigo.dinero(800)
+	var micaela = new Sim() micaela.dinero(10000)
+	
+	jose.amigos([pedro,rodrigo,micaela])
+	
+	jose.tenerCelosPor(plata)
+	
+	assert.equals(190,jose.nivelFelicidad())
+	assert.equals(#{rodrigo},jose.amigos())
+	
+}
+
+test "29.0 - Hacer que un sim vaya a trabajar. Este mensaje debe funcionar aún para sims desocupados" {
+	var federico = new Sim()
+	
+	federico.trabajarEn(desocupado,0,0)
+	
+	assert.equals(0,federico.dinero())
+	assert.equals(0,federico.nivelFelicidad())
+}
+
+test "29.1 - Hacer que un sim vaya a trabajar." {
+	var federico = new Sim()
+	//trabajarEn(tipoTrabajo,dineroAGanar,felicidadAGanar)
+	federico.trabajarEn(copado,50000,500)
+	
+	assert.equals(50000, federico.dinero())
+	assert.equals(500, federico.nivelFelicidad())
+}
+
