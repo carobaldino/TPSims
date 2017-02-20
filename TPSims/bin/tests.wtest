@@ -374,6 +374,35 @@ test "17.1 - Saber si una relacion funcina: carlo y carla se atren, entonces fun
 		
 }
 
+test "18 - Saber si en una relacion se pudrio todo: no funciona y al menos uno de los dos miembros tiene atraccion por uno de los amigos
+de la relacion" {
+	var carlo = new Sim() carlo.sexo("Masculino") carlo.preferenciaSexual("Femenino") carlo.personalidad(buenazo)
+	var juan = new Sim() juan.sexo("Masculino") juan.preferenciaSexual("Femenino") juan.personalidad(buenazo)
+	
+	var carolina = new Sim() carolina.sexo("Femenino") //juan y carlo les atrae carolina
+	var martin = new Sim() martin.sexo("Masculino")
+	
+	juan.amigos([carolina, martin])
+	carlo.amigos([juan])
+	
+	carlo.iniciarRelacionCon(juan)
+	
+	assert.that(carlo.sePudrioTodo() && juan.sePudrioTodo())
+	
+}
+
+test "19 - Reestablecer una relacion terminada: consiste en hacer que sus miembros originales terminen sus relaciones actuales, si tuvieran,
+y (re)inicien esta relacion"{
+	var carlitos = new Sim()
+	var carlita = new Sim()
+	
+	carlitos.reestablecerRelacionCon(carlita)
+	
+	assert.equals("Relacion",carlitos.situacionSentimental())
+	assert.equals("Relacion",carlita.situacionSentimental())	
+	
+}
+
 test "20.0 - Saber si un Sim se siente atraido por otro: 
 Si a María le gustan los Hombres, y a Juan las mujeres, no van a sentir atracción de otro Sexo"{
 	

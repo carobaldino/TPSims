@@ -189,11 +189,22 @@ class Sim{
 		return self.leAtrae(unSim) && unSim.leAtrae(self)
 	}
 		
+	method sePudrioTodo(){
+		return not(self.funcionaRelacionCon(self.pareja())) && self.leAtraeAlgunAmigoEnComun() 
+	}	
 	
+	method pareja(){
+		return situacionSentimental.otroMiembro()
+	}
+	
+	method leAtraeAlgunAmigoEnComun(){
+		return self.amigos().any({amigo => self.pareja()._amigos().contains(amigo)})
+	}
 
-	
-	
-	
+	method reestablecerRelacionCon(sim){
+		self.terminarRelacionCon(sim)
+		self.iniciarRelacionCon(sim)
+	}
 	
 	method volverALaNormalidad(){
 		self.estadoDeAnimo(normal)
