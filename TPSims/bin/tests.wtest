@@ -5,8 +5,12 @@ import Personalidades.*
 import Sim.*
 import SituacionesSentimentales.*
 import Trabajos.*
+import FuentesDeInformacion.*
+import Vims.*
 
- 
+test "PRIMERA ENTREGA"{
+	assert.that(true)
+} 
 
 test "1.0 - Hacer que un Sim abrace a otro con abrazo comun: Si Maria tiene felicidad=20 y abraza a Federico de felicidad=30, entonces Maria nivelFelicidad=22 y Federico nivelFelicidad=34 "{
 	var maria = new Sim() maria.nivelFelicidad(20)
@@ -256,8 +260,8 @@ test "10 - Preguntarle a un Sim si es el mas popular de su circulo de amigos"{
 }
 
 test "11 - Hacer que dos Sims inicien una relacion: Carlitos y Carla inician una relación y cambian su estado"{
-	var carlitos = new Sim()
-	var carlita = new Sim()
+	var carlitos = new Sim() carlitos.edad(32)
+	var carlita = new Sim() carlita.edad(32)
 	
 	carlitos.iniciarRelacionCon(carlita)
 	
@@ -266,8 +270,8 @@ test "11 - Hacer que dos Sims inicien una relacion: Carlitos y Carla inician una
 }
 
 test "12.0 - Saber si un Sim forma parte de una relacion: Carlitos y Carla forman parte de una relacion"{
-	var carlitos = new Sim()
-	var carlita = new Sim()
+	var carlitos = new Sim() carlitos.edad(32)
+	var carlita = new Sim() carlita.edad(32)
 	
 	carlitos.iniciarRelacionCon(carlita)
 	
@@ -282,8 +286,8 @@ test "12.1 - Saber si un sim forma parte de una relacion: Roberto esta soltero"{
 }
 
 test "13 - Hacer que una relacion termine haciendo que sus miembros dejen de formar parte de ella" {
-	var carlo = new Sim()
-	var carla = new Sim()
+	var carlo = new Sim() carlo.edad(55)
+	var carla = new Sim() carla.edad(50)
 	
 	carlo.iniciarRelacionCon(carla)
 	
@@ -294,8 +298,8 @@ test "13 - Hacer que una relacion termine haciendo que sus miembros dejen de for
 }
 
 test "14.0 - Saber si una relación terminó" {
-	var carlo = new Sim()
-	var carla = new Sim()
+	var carlo = new Sim() carlo.edad(20)
+	var carla = new Sim() carla.edad(21)
 	
 	carlo.iniciarRelacionCon(carla)
 	
@@ -305,8 +309,8 @@ test "14.0 - Saber si una relación terminó" {
 }
 
 test "14.1 - Saber si una relación terminó" {
-	var carlo = new Sim()
-	var carla = new Sim()
+	var carlo = new Sim() carlo.edad(20)
+	var carla = new Sim() carla.edad(21)
 	
 	carlo.iniciarRelacionCon(carla)
 	
@@ -317,8 +321,8 @@ test "14.1 - Saber si una relación terminó" {
 
 
 test "15.0 - Conocer el circulo de amigos de una relacion: dos novios fusionan a sus amigos sin repetidos" {
-	var carlo = new Sim()
-	var carla = new Sim()
+	var carlo = new Sim() carlo.edad(21)
+	var carla = new Sim() carla.edad(32)
 	
 	var jose = new Sim()
 	var martin = new Sim()
@@ -333,8 +337,8 @@ test "15.0 - Conocer el circulo de amigos de una relacion: dos novios fusionan a
 }
 
 test "15.1 - Conocer el circulo de amigos de una relacion: si termina la relacion no pierde a sus amigos"{
-	var carlo = new Sim()
-	var carla = new Sim()
+	var carlo = new Sim() carlo.edad(55)
+	var carla = new Sim() carla.edad(32)
 	
 	var jose = new Sim()
 	var martin = new Sim()
@@ -352,8 +356,8 @@ test "15.1 - Conocer el circulo de amigos de una relacion: si termina la relacio
 }
 
 test "16 - Conocer a los miembros de una relacion (siempre son dos)" {
-	var carlo = new Sim()
-	var carla = new Sim()
+	var carlo = new Sim() carlo.edad(21)
+	var carla = new Sim() carla.edad(22)
 	
 	carla.iniciarRelacionCon(carlo)
 	
@@ -377,8 +381,8 @@ test "17.1 - Saber si una relacion funcina: carlo y carla se atren, entonces fun
 
 test "18 - Saber si en una relacion se pudrio todo: no funciona y al menos uno de los dos miembros tiene atraccion por uno de los amigos
 de la relacion" {
-	var carlo = new Sim() carlo.sexo("Masculino") carlo.preferenciaSexual("Femenino") carlo.personalidad(buenazo)
-	var juan = new Sim() juan.sexo("Masculino") juan.preferenciaSexual("Femenino") juan.personalidad(buenazo)
+	var carlo = new Sim() carlo.sexo("Masculino") carlo.preferenciaSexual("Femenino") carlo.personalidad(buenazo) carlo.edad(34)
+	var juan = new Sim() juan.sexo("Masculino") juan.preferenciaSexual("Femenino") juan.personalidad(buenazo) juan.edad(32)
 	
 	var carolina = new Sim() carolina.sexo("Femenino") //juan y carlo les atrae carolina
 	var martin = new Sim() martin.sexo("Masculino")
@@ -394,8 +398,8 @@ de la relacion" {
 
 test "19 - Reestablecer una relacion terminada: consiste en hacer que sus miembros originales terminen sus relaciones actuales, si tuvieran,
 y (re)inicien esta relacion"{
-	var carlitos = new Sim()
-	var carlita = new Sim()
+	var carlitos = new Sim() carlitos.edad(25)
+	var carlita = new Sim() carlita.edad(21)
 	
 	carlitos.reestablecerRelacionCon(carlita)
 	
@@ -672,3 +676,136 @@ test "29.1 - Hacer que un sim vaya a trabajar." {
 	assert.equals(500, federico.nivelFelicidad())
 }
 
+
+test "SEGUNDA ENTREGA"{
+	assert.that(true)
+}
+
+test "1 - Saber cuanto dinero está dispuesto a prestarle un Sim a otro" {
+	var lucia = new Sim() lucia.personalidad(buenazo) lucia.nivelFelicidad(500) lucia.dinero(8000)
+	var leo = new Sim() leo.personalidad(buenazo) leo.nivelFelicidad(200) leo.dinero(1500)
+	
+	assert.equals(2500,lucia.cantidadDispuestaAPrestar(leo))
+	assert.equals(1000,leo.cantidadDispuestaAPrestar(lucia))
+		
+}
+
+test "2 - Hacer que un Sim preste una cantidad de dinero solicitada a otro Sim. Si no puede hacerlo, debe fallar"{
+	var lucia = new Sim() lucia.personalidad(buenazo) lucia.nivelFelicidad(500) lucia.dinero(8000)
+	var leo = new Sim() leo.personalidad(buenazo) leo.nivelFelicidad(200) leo.dinero(1500)
+	
+	lucia.prestarDineroA(leo,2500)
+	
+	assert.equals(4000, leo.dinero())
+}
+
+test "3 - Desarrollar los nuevos trabajos"{
+	var federico = new Sim()
+	var julian = new Sim()
+	//trabajarEn(tipoTrabajo,dineroAGanar,felicidadAGanar)
+	
+	federico.trabajarEn(mercenarioSocial,50000,500)
+	julian.trabajarEn(aburridoHastaLaMuerte,5000,500)
+	
+	assert.equals(mercenarioSocial, federico.tipoDeTrabajo().tipoDeTrabajo())
+	assert.equals(aburridoHastaLaMuerte, julian.tipoDeTrabajo().tipoDeTrabajo())
+}
+
+test "4 - Hacer que el Sim cambie su estado de animo (si corresponde) cuando va a a trabajar"{
+	var federico = new Sim() federico.estadoDeAnimo(peleadoConLaVida)
+	//trabajarEn(tipoTrabajo,dineroAGanar,felicidadAGanar)
+	federico.trabajarEn(copado,50000,500)
+	
+	
+	assert.equals(normal, federico.estadoDeAnimo())
+}
+
+test "5 - Validar Reglas de negocio"{
+	var juancito = new Sim() juancito.edad(18)
+	var camila = new Sim() camila.edad(18)
+	
+	juancito.iniciarRelacionCon(camila)
+	
+	assert.that(juancito.estaEnPareja())
+}
+
+test "6.0 - Saber si un conocimiento es privado para un Sim"{
+	var pepito = new Sim()
+	pepito.recibirInformacion("La contraseña es 1234")
+	
+	var amigo1 = new Sim() amigo1.recibirInformacion("Estaba en la floreria")
+	var amigo2 = new Sim() amigo2.recibirInformacion("IronMan rocks")
+	pepito.amigos([amigo1,amigo2])
+	
+	assert.that(pepito.esPrivado("La contraseña es 1234"))
+	
+}
+
+test "6.1 - Saber si un conocimiento es privado para un Sim"{
+	var pepito = new Sim()
+	pepito.recibirInformacion("La contraseña es 1234")
+	
+	var amigo1 = new Sim() amigo1.recibirInformacion("Estaba en la floreria")
+	var amigo2 = new Sim() amigo2.recibirInformacion("La contraseña es 1234")
+	pepito.amigos([amigo1,amigo2])
+	
+	assert.that(not(pepito.esPrivado("La contraseña es 1234")))
+	
+}
+
+test "7 - Hacer que un Sim difunda una información"{
+	var pepito = new Sim()
+	
+	var amigo1 = new Sim()
+	var amigo2 = new Sim()
+	
+	pepito.amigos([amigo1,amigo2])
+	
+	pepito.difundirConocimiento("Maria engaño al novio")
+	
+	assert.equals(["Maria engaño al novio"],amigo1.informacion())
+	assert.equals(["Maria engaño al novio"],amigo2.informacion())
+}
+
+test "8 - Hacer que un Sim desparrame un chisme de otro Sim"{
+	var pepito = new Sim() var amigo1 = new Sim() var amigo2 = new Sim()
+	pepito.amigos([amigo1,amigo2])
+	
+	amigo1.recibirInformacion("Me gusta Justin Bieber")
+	
+	pepito.desparramarChisme("Me gusta Justin Bieber",amigo1)
+	
+	assert.equals(["Me gusta Justin Bieber"], amigo2.informacion())
+	
+}
+
+test "9.0 - Desarrollar fuentes de informacion: libro " {
+	var harryPotter = new Libro(["La cicatriz ....","Magia.....","Howgarts..."])
+	
+	assert.that(["La cicatriz ....","Magia.....","Howgarts..."].contains(harryPotter.pedirInformacion()))
+}
+
+test "9.1 - Desarrollar fuentes de informacion: sim " {
+	var juancito = new Sim() 
+	var pedro = new Sim() pedro.recibirInformacion("Me depilo las piernas")
+	var manuela = new Sim() manuela.recibirInformacion("No me gusta depilarme")
+	
+	juancito.amigos([pedro,manuela])
+	
+	assert.that(["Me depilo las piernas","No me gusta depilarme"].contains(juancito.pedirInformacion()))
+	
+}
+
+test "9.2 - Desarrollar fuentes de informacion: tinelli"{
+	assert.equals("totó",tinelli.pedirInformacion())
+}
+
+test "9.3 - Desarrollar fuestes de informacion: rial"{
+	assert.equals("escándalo",rial.pedirInformacion())
+}
+
+test "11 - Hacer que un Vim cumpla años" {
+	var vim = new Vim()
+	
+	assert.equals(18,vim.cumplirAnios())
+}

@@ -17,6 +17,8 @@ class Sim{
 	var informacion = []
 	var situacionSentimental = soltero
 	var historialDeRelaciones = []
+	var tipoDeTrabajo
+	var fuentesDeInformacion = []
 
 
 	
@@ -37,6 +39,9 @@ class Sim{
 	}
 	method estadoDeAnimo(){
 		return estadoDeAnimo
+	}
+	method tipoDeTrabajo(){
+		return tipoDeTrabajo
 	}
 	method sexo(_sexo){
 		sexo = _sexo
@@ -64,6 +69,9 @@ class Sim{
 	}
 	method situacionSentimental(situacion){
 		situacionSentimental = situacion
+	}
+	method tipoDeTrabajo(_tipoDeTrabajo){
+		tipoDeTrabajo = _tipoDeTrabajo
 	}
 	
 
@@ -146,9 +154,20 @@ class Sim{
 	}
 	
 	method iniciarRelacionCon(otroSim){
+		if(self.estaEnPareja() || self.tienenMenosDe16Anios(otroSim))
+			error.throwWithMessage("No se puede iniciar relacion")
 		var relacion = new Relacion(self,otroSim)
 		self.situacionSentimental(relacion)
 		otroSim.situacionSentimental(relacion)
+	
+	}
+	
+	method estaEnPareja(){
+		return situacionSentimental.situacion() == "Relacion"
+	}
+	
+	method tienenMenosDe16Anios(otroSim){
+		return (self.edad() < 16) || (otroSim.edad() < 16)
 	}
 	
 	method amigos(){
@@ -243,6 +262,7 @@ class Sim{
 	
 	method trabajarEn(tipoTrabajo,dineroACobrar,variacionFelicidad){
 		var trabajo = new Trabajo(dineroACobrar,variacionFelicidad,tipoTrabajo,self) 
+		self.tipoDeTrabajo(trabajo)
 		trabajo.trabajar()
 	}
 	
@@ -250,6 +270,68 @@ class Sim{
 		dinero += cantDinero
 	}
 	
+	method prestarDineroA(otroSim,cantDinero){
+		if(not(self.tieneDinero(cantDinero) && self.estaDispuestoAPrestar(cantDinero,otroSim)))
+			error.throwWithMessage("No se realiza el prestamo")
+		self.transferirDinero(cantDinero,otroSim)	
+	}
 	
+	method tieneDinero(cantDinero){
+		return dinero >= cantDinero
+	}
+	
+	method estaDispuestoAPrestar(cantDinero,sim){
+		return personalidad.dispuestoAPrestar(cantDinero,sim,self) 
+	}
+	
+	method transferirDinero(cantDinero,otroSim){
+		otroSim.aumentarDinero(cantDinero)
+	}
+
+	method cantidadDispuestaAPrestar(otroSim){
+		return 10 * self.valorarA(otroSim)
+	}
+	
+	method difundirConocimiento(unConocimiento){
+		if (not(informacion.contains(unConocimiento))){
+			self.difundirEntreAmigos(unConocimiento)
+		}
+	}
+	
+	method difundirEntreAmigos(unConocimiento){
+		amigos.forEach({amigo => amigo.recibirInformacion(unConocimiento)})
+	}
+	
+	method esPrivado(conocimiento){
+		return informacion.contains(conocimiento) && not(self.amigosPoseen(conocimiento))
+	}
+	
+	method amigosPoseen(conocimiento){
+		return amigos.any({amigo => amigo.informacion().contains(conocimiento)})
+	}
+		
+	method desparramarChisme(chisme,otroSim){
+		if(not(otroSim.esPrivado(chisme)))
+			error.throwWithMessage("No es un chisme porque no es un conocimiento privado")
+		self.difundirConocimiento(chisme)	
+	}
+	
+	method fuentesDeInformacion(){
+		return fuentesDeInformacion
+	}
+	method agregarFuenteInformacion(unaFuente){
+		fuentesDeInformacion.add(unaFuente)
+	}
+	
+	method pedirInformacion(){
+		return self.proveerChismeDeAmigo()
+	}
+	
+	method proveerChismeDeAmigo(){
+		return amigos.map({amigo => amigo.informacion()}).flatten().anyOne()
+	}
+	
+
+
 
 }

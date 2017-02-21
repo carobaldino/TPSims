@@ -3,8 +3,17 @@ import Sim.*
 import Abrazos.*
 import EstadosDeAnimo.*
 
-object interesado {
-	method valor(sim,simEvaluador){
+class Personalidad {
+	method dispuestoAPrestar(cantDinero,otroSim,simPrestamista){
+		return cantDinero <= simPrestamista.cantidadDispuestaAPrestar(otroSim) 
+	}
+	
+	method valor(sim,simEvaluador)
+}
+
+
+object interesado inherits Personalidad{
+	override method valor(sim,simEvaluador){
 		return sim.amigos().sum({unSim => unSim.dinero()})*0.1
 	}
 	
@@ -12,10 +21,15 @@ object interesado {
 		return simAEvaluar.duplicaFortunaDe(sim)
 	}
 	
+	override method dispuestoAPrestar(cantDinero,otroSim,simPrestamista){
+		return cantDinero <= otroSim.dinero() 
+	}
+	
 }
 
-object superficial{
-	method valor(sim,simEvaluador){
+
+object superficial inherits Personalidad{
+	override method valor(sim,simEvaluador){
 		return sim.nivelPopularidad()*20
 	}
 	
@@ -24,8 +38,9 @@ object superficial{
 	}
 }
 
-object buenazo{
-	method valor(sim,simEvaluador){
+
+object buenazo inherits Personalidad{
+	override method valor(sim,simEvaluador){
 		return simEvaluador.nivelFelicidad() * 0.5
 	}
 	
@@ -34,8 +49,9 @@ object buenazo{
 	}
 }
 
-object peleadoConLaVida{
-	method valor(sim,simEvaluador){
+
+object peleadoConLaVida inherits Personalidad{
+	override method valor(sim,simEvaluador){
 		return 0
 	}
 	
@@ -43,3 +59,4 @@ object peleadoConLaVida{
 		return simAEvaluar.estaTriste()
 	}
 }
+

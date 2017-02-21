@@ -9,8 +9,6 @@ object abrazoComun {
 		simAbrazador.aumentarFelicidad(2)
 		simAbrazado.aumentarFelicidad(4)
 	}
-
-
 }
 
 object abrazoProlongado {

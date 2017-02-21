@@ -38,3 +38,4 @@ object pareja{
 		sim.amigos(sim.amigos().filter({unAmigo=> not(sim.pareja()._amigos().contains(unAmigo)) }) )
 	}
 }
+

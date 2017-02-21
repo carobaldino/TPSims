@@ -17,8 +17,6 @@ object soltero {
 	method obtenerAmigos(amigos){
 		return amigos.asSet()
 	}
-
-
 }
 
 class Relacion{

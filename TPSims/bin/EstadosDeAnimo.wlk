@@ -37,8 +37,6 @@ object normal {
 	method informacion(infoDelSim){
 		return infoDelSim
 	}
-	
-
 }
 
 
